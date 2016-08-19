@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: 1.0.0
+  title: Digital Distribution Services API - Partner Profile
+  contact: {}
+host: 'digital-distribution-services-gsc.umusic.com:443'
+basePath: /resources
+tags:
+  - name: technicalProfile
+  - name: businessProfile
+schemes:
+  - https
+
+################################################################################
+#                                   API                                        #
+################################################################################
+
+## Code-generation using this path would work in terms of API- and Controller-code-generation, but no models are created after all
+paths:
+  '/demo/{shortname}':
+    get:
+      tags: 
+        - shortnameGet
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/shortname'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "levelOne/levelOneObject.yaml#/levelOneObject"
+
+## Code-generation using this path-style (dot slash) won't work for a certain level of properties-depth when using parameter-ref (see '/demoAbs3/{shortname}' otherwise ok), but models will be created at least when using './path'-notation.
+
+  '/demoAbs/{shortname}':
+    get:
+      tags: 
+        - shortnameGet2
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/shortname'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "./levelOneAbs/levelOneObjectAbs.yaml#/levelOneObjectAbs"
+
+## This is the crucial part: This works when we uncomment 'AnotherProperty' in file './levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObject.yaml' but as soon as AnotherObject contains a '$ref ...' we get an error, no code will be generated! 
+#
+#[main] INFO io.swagger.parser.Swagger20Parser - reading from bugDemoSpec.yaml
+#Exception in thread "main" java.lang.RuntimeException: Could not find definitions/AnotherObjectSameLevel in contents of ./levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObject.yaml
+#        at io.swagger.parser.ResolverCache.loadRef(ResolverCache.java:118)
+#        at io.swagger.parser.processors.ExternalRefProcessor.processRefToExternalDefinition(ExternalRefProcessor.java:30)
+#        at io.swagger.parser.processors.ExternalRefProcessor.processRefToExternalDefinition(ExternalRefProcessor.java:71)
+#        at io.swagger.parser.processors.ModelProcessor.processRefModel(ModelProcessor.java:92)
+#        at io.swagger.parser.processors.ModelProcessor.processModel(ModelProcessor.java:33)
+#        at io.swagger.parser.processors.ParameterProcessor.processParameters(ParameterProcessor.java:44)
+#        at io.swagger.parser.processors.OperationProcessor.processOperation(OperationProcessor.java:26)
+#        at io.swagger.parser.processors.PathsProcessor.processPaths(PathsProcessor.java:89)
+#        at io.swagger.parser.SwaggerResolver.resolve(SwaggerResolver.java:40)
+#        at io.swagger.parser.SwaggerParser.read(SwaggerParser.java:66)
+#        at io.swagger.codegen.config.CodegenConfigurator.toClientOptInput(CodegenConfigurator.java:390)
+#        at io.swagger.codegen.cmd.Generate.run(Generate.java:221)
+#        at io.swagger.codegen.SwaggerCodegen.main(SwaggerCodegen.java:36)
+
+  '/demoAbs3/{shortname}':
+    put:
+      tags: 
+          - shortnamePut
+      consumes: []
+      produces: []
+      parameters:
+        - $ref: '#/parameters/shortname'
+        - $ref: '#/parameters/anotherObject'
+      responses:
+        '200':
+          description: OK
+            
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  shortname:
+    name: shortname
+    in: path
+    description: identifier of the partner - as in other systems the shortname should be used. E.g. amazonumg
+    type: string
+    required: true
+
+  anotherObject:
+    name: anotherObject2
+    in: body
+    schema:
+      $ref: "./levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObject.yaml#/AnotherObject"
+    required: true

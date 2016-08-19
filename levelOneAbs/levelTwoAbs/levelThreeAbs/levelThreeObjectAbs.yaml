@@ -1,0 +1,6 @@
+levelThreeObjectAbs:
+    type: object
+    properties:
+      businessProfile:
+        #type: string
+        $ref: "./levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObject.yaml#/AnotherObject"

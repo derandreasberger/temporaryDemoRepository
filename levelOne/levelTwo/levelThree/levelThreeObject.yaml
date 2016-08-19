@@ -1,0 +1,10 @@
+  levelThreeObject:
+    type: object
+    properties:
+      partnerID:
+        type: string
+      name:
+        type: string
+#	  levelTwoObject:
+#	    $ref: "levelThree/levelThreeObject.yaml#/levelThreeObject"
+	  

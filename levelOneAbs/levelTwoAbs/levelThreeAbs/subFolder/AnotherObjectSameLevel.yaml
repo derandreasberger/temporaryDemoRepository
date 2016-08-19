@@ -1,0 +1,14 @@
+  AnotherObjectSameLevel:
+    type: object
+    properties:
+      partnerID:
+        type: string
+      name:
+        type: string
+      AnotherProperty:
+        type: array
+        items:
+          $ref: "./levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObjectSameLevel2.yaml#/AnotherObjectSameLevel2"
+      #levelThreeObject:
+      #  $ref: "levelThree/levelThreeObject.yaml#/levelThreeObject"
+  

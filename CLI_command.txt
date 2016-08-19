@@ -1,0 +1,1 @@
+java -jar -DdebugModels=true swagger-codegen-cli-2.2.1.jar generate -i bugDemoSpec.yaml -l spring -o target/server/demo/

@@ -1,0 +1,5 @@
+levelOneObject:
+    type: object
+    properties:
+      businessProfile:
+        $ref: "levelTwo/levelTwoObject.yaml#/levelTwoObject"

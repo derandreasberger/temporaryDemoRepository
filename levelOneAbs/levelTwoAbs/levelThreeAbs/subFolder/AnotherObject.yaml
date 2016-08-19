@@ -1,0 +1,9 @@
+  AnotherObject:
+    type: object
+    properties:
+      partnerID:
+        type: string
+      name:
+        type: string
+      AnotherProperty:
+        $ref: "./levelOneAbs/levelTwoAbs/levelThreeAbs/subFolder/AnotherObjectSameLevel.yaml#/AnotherObjectSameLevel"
